@@ -1,39 +1,34 @@
 import React from 'react';
-import {addProduct, removeProduct, updatePrice} from './redux/actions';
-import {useDispatch} from 'react-redux';
+import {addProduct, removeProduct} from './redux/actions';
+import {connect} from 'react-redux';
 
-const App = () => {
-	const dispatch = useDispatch();
-	setTimeout(function () {
-		dispatch(addProduct({id: 1, name: 'Zahan', gender: 'Male', price: 10}));
-	}, 4000);
-	setTimeout(function () {
-		dispatch(updatePrice());
-	}, 5000);
-	setTimeout(function () {
-		dispatch(addProduct({id: 1, name: 'Zahan', gender: 'Male', price: 10}));
-	}, 6000);
-	setTimeout(function () {
-		dispatch(updatePrice());
-	}, 7000);
-	setTimeout(function () {
-		dispatch(removeProduct({id: 1, name: 'Zahan', gender: 'Male', price: 10}));
-	}, 8000);
-	setTimeout(function () {
-		dispatch(updatePrice());
-	}, 9000);
-	setTimeout(function () {
-		dispatch(removeProduct({id: 1, name: 'Zahan', gender: 'Male', price: 10}));
-	}, 10000);
-	setTimeout(function () {
-		dispatch(updatePrice());
-	}, 11000);
-
+function App(props) {
 	return (
 		<>
-			<div>Hello</div>
+			<div>
+				{props.products.map((i, k) => (
+					<div key={k}>
+						{i.name} {i.id} {i.price} {i.total}
+					</div>
+				))}
+			</div>
+			<div>{props.totalPrice}</div>
+			<button onClick={() => props.add({name: 'Zahan', id: 1, price: 10})}> + </button>
+			<button onClick={() => props.remove({name: 'Zahan', id: 1, price: 10})}> - </button>
 		</>
 	);
+}
+
+const mapStateToProps = (state) => ({
+	totalPrice: state.totalPrice,
+	products: state.products,
+});
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		add: (ownProps) => dispatch(addProduct(ownProps)),
+		remove: (ownProps) => dispatch(removeProduct(ownProps)),
+	};
 };
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,39 +1,29 @@
 import React from 'react';
-import {addProduct, removeProduct, updatePrice} from './redux/actions';
+import {addProduct, removeProduct} from './redux/actions';
 import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 
-const App = () => {
+function App() {
 	const dispatch = useDispatch();
-	setTimeout(function () {
-		dispatch(addProduct({id: 1, name: 'Zahan', gender: 'Male', price: 10}));
-	}, 4000);
-	setTimeout(function () {
-		dispatch(updatePrice());
-	}, 5000);
-	setTimeout(function () {
-		dispatch(addProduct({id: 1, name: 'Zahan', gender: 'Male', price: 10}));
-	}, 6000);
-	setTimeout(function () {
-		dispatch(updatePrice());
-	}, 7000);
-	setTimeout(function () {
-		dispatch(removeProduct({id: 1, name: 'Zahan', gender: 'Male', price: 10}));
-	}, 8000);
-	setTimeout(function () {
-		dispatch(updatePrice());
-	}, 9000);
-	setTimeout(function () {
-		dispatch(removeProduct({id: 1, name: 'Zahan', gender: 'Male', price: 10}));
-	}, 10000);
-	setTimeout(function () {
-		dispatch(updatePrice());
-	}, 11000);
+	var products = useSelector((state) => state.products);
+	var totalPrice = useSelector((state) => state.totalPrice);
 
 	return (
 		<>
-			<div>Hello</div>
+			<div>
+				{products.map((i, key) => (
+					<div>
+						<div key={key}>
+							{i.name} {i.gender} {i.price} {i.total}
+						</div>
+					</div>
+				))}
+			</div>
+			<div>{totalPrice}</div>
+			<button onClick={() => dispatch(addProduct({name: 'Zahan', id: 1, price: 10}))}> + </button>
+			<button onClick={() => dispatch(removeProduct({name: 'Zahan', id: 1, price: 10}))}> - </button>
 		</>
 	);
-};
+}
 
 export default App;

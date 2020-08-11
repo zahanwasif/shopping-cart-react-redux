@@ -1,34 +1,33 @@
 import React from 'react';
-import {addProduct, removeProduct} from './redux/actions';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {addProduct, removeProduct, checkout} from './redux/actions';
 
-function App(props) {
+const App = () => {
+	const dispatch = useDispatch();
+	const state = useSelector((state) => state);
+	var products = [
+		{name: 'iPhone10', id: 1, price: 999},
+		{name: 'iPhone11', id: 2, price: 1200},
+		{name: 'Macbook Pro', id: 3, price: 1500},
+		{name: 'iPhone12', id: 4, price: 1500},
+	];
+
 	return (
-		<>
+		<div>
+			<div>total price : {state.totalPrice} dollars </div>
 			<div>
-				{props.products.map((i, k) => (
-					<div key={k}>
-						{i.name} {i.id} {i.price} {i.total}
+				{products.map((product) => (
+					<div>
+						<b>{product.name}</b> is of <b>{product.price} dollars </b>
+						<button onClick={() => dispatch(addProduct(product))}> Add to cart </button>
+						<button onClick={() => dispatch(removeProduct(product))}> remove from cart</button>
+						<div>Quantity : {state.products.find((x) => x.id === product.id) ? state.products.find((x) => x.id === product.id).total : 0}</div>
 					</div>
 				))}
 			</div>
-			<div>{props.totalPrice}</div>
-			<button onClick={() => props.add({name: 'Zahan', id: 1, price: 10})}> + </button>
-			<button onClick={() => props.remove({name: 'Zahan', id: 1, price: 10})}> - </button>
-		</>
+			<button onClick={() => dispatch(checkout())}>checkout</button>
+		</div>
 	);
-}
-
-const mapStateToProps = (state) => ({
-	totalPrice: state.totalPrice,
-	products: state.products,
-});
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		add: (ownProps) => dispatch(addProduct(ownProps)),
-		remove: (ownProps) => dispatch(removeProduct(ownProps)),
-	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

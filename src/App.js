@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {addProduct, removeProduct} from './redux/actions';
+import {addProduct, removeProduct, checkout} from './redux/actions';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -25,6 +25,7 @@ const App = () => {
 					</div>
 				))}
 			</div>
+			<button onClick={() => dispatch(checkout())}>checkout</button>
 		</div>
 	);
 };

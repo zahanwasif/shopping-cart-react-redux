@@ -1,4 +1,4 @@
-import {ADD_PRODUCT, REMOVE_PRODUCT} from '../actions/actionTypes';
+import {ADD_PRODUCT, REMOVE_PRODUCT, CHECKOUT} from '../actions/actionTypes';
 
 const initialState = {
 	totalPrice: 0,
@@ -8,6 +8,9 @@ const initialState = {
 
 export default function (state = initialState, action) {
 	switch (action.type) {
+		case CHECKOUT: {
+			return initialState;
+		}
 		case ADD_PRODUCT: {
 			const {product} = action.payload;
 			let total = 0;

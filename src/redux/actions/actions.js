@@ -1,4 +1,4 @@
-import {ADD_PRODUCT, REMOVE_PRODUCT} from './actionTypes';
+import {ADD_PRODUCT, REMOVE_PRODUCT, CHECKOUT} from './actionTypes';
 
 export const addProduct = (product) => {
 	return {
@@ -15,5 +15,11 @@ export const removeProduct = (product) => {
 		payload: {
 			product,
 		},
+	};
+};
+
+export const checkout = () => {
+	return {
+		type: CHECKOUT,
 	};
 };

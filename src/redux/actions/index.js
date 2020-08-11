@@ -1,3 +1,3 @@
-import {addProduct, removeProduct} from './actions';
+import {addProduct, removeProduct, checkout} from './actions';
 
-export {addProduct, removeProduct};
+export {addProduct, removeProduct, checkout};
